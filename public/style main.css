@@ -32,6 +32,34 @@ body {
 .chat-messages {
   width: 100%;
   height: 500px;
+  padding: 10px;
+  overflow: auto;
+}
+.chat-messages .message {
+}
+
+.message-container {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+
+.chat-messages .message p {
+  flex: 2;
+  /* width: 100px; */
+  /* border-radius: 20px; */
+  border: 1px solid rgb(99, 220, 231);
+  padding: 15px 10px;
+  background-color: #9393d6;
+  font-size: 12px;
+}
+
+.chat-messages .message img {
+  width: 40px;
+  border-radius: 1000px;
+  margin: 0px 6px;
 }
 
 .form-group {
@@ -91,5 +119,5 @@ body {
 
 .header i {
   font-size: 60px;
-  color: blue;
+  color: rgb(75, 75, 75);
 }

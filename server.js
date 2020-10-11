@@ -11,7 +11,7 @@ io.on('connection', (socket) => {
   socket.emit('message', 'welcome to chatbot');
 
   socket.on('chatMessage', (msg) => {
-    console.log(msg);
+    console.log(formatMessage(msg));
     socket.emit('message', formatMessage(msg));
   });
 });
