@@ -48,10 +48,14 @@ body {
 
 .chat-messages .message p {
   flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
   /* width: 100px; */
   /* border-radius: 20px; */
   border: 1px solid rgb(99, 220, 231);
-  padding: 15px 10px;
+  padding: 10px 17px;
   background-color: #9393d6;
   font-size: 12px;
 }
@@ -60,6 +64,12 @@ body {
   width: 40px;
   border-radius: 1000px;
   margin: 0px 6px;
+}
+
+.msg-time {
+  font-size: 10px;
+  color: rgb(28, 6, 151);
+  align-self: flex-end;
 }
 
 .form-group {
@@ -120,4 +130,9 @@ body {
 .header i {
   font-size: 60px;
   color: rgb(75, 75, 75);
+}
+
+.header i:hover {
+  color: #fff;
+  cursor: pointer;
 }

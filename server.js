@@ -10,6 +10,7 @@ const io = socketio(server);
 io.on('connection', (socket) => {
   socket.emit('message', 'welcome to chatbot');
 
+  socket.broadcast.emit('message', 'hey hey hey');
   socket.on('chatMessage', (msg) => {
     console.log(formatMessage(msg));
     socket.emit('message', formatMessage(msg));

@@ -57,12 +57,14 @@ const outputMessage = (serverData) => {
 
   msgDiv.innerHTML = `<div class="message-container">
 
-      
-     <img src=${img} alt="" />
-    <p>
-      ${msg}
-      <span>${time}</span>
-    </p>
+      <div class="img-container">
+        <img src=${img} alt="" />
+      </div>
+        <p>
+            ${msg}
+            <span class='msg-time'>${time}</span>
+        </p>
+        
     </div>`;
 
   return msgDiv;
