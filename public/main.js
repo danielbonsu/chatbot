@@ -3,16 +3,23 @@ const socket = io();
 const chatForm = document.querySelector(
   '.main-form'
 );
+const { username, room } = Qs.parse(
+
+  window.location.search,
+  {
+    ignoreQueryPrefix: true,
+  }
+);
+
+// join user to room
+socket.emit('joinRoom', { username, room })
+
 
 chatForm.addEventListener('submit', function (e) {
   e.preventDefault();
   const msg = e.target.elements.txt.value;
-  const { username, room } = Qs.parse(
-    window.location.search,
-    {
-      ignoreQueryPrefix: true,
-    }
-  );
+
+
 
   //submit data to server
   socket.emit('chatMessage', {
@@ -23,9 +30,16 @@ chatForm.addEventListener('submit', function (e) {
       'https://avatars0.githubusercontent.com/u/1?v=4',
   });
 
+
+
+
   e.target.elements.txt.value = '';
   e.target.elements.txt.focus();
 });
+
+socket.on('chatMessage', (msg) => {
+  outputMessage(msg)
+})
 
 socket.on('message', (msg) => {
   console.log(msg);
@@ -62,7 +76,7 @@ const outputMessage = (serverData) => {
       </div>
         <p>
             ${msg}
-            <span class='msg-time'>${time}</span>
+            <span class='msg-time'>${time} ${username}</span>
         </p>
         
     </div>`;

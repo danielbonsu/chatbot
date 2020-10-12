@@ -3,33 +3,39 @@ const app = express();
 const path = require('path');
 const server = require('http').createServer(app);
 const socketio = require('socket.io');
-const UserJoin = require('./public/utils/users');
+const { userJoin, userLeave, getCurrentUser } = require('./public/utils/users');
 const formatMessage = require('./public/utils/messages');
-const userJoin = require('./public/utils/users');
+
 const io = socketio(server);
 
 io.on('connection', (socket) => {
   socket.emit('message', 'welcome to chatbot');
 
-  socket.broadcast.emit(
-    'message',
-    'someone joined us'
-  );
+
+
+  // join user to room
+  socket.on('joinRoom', ({ username, room }) => {
+    const user = { username, room, id: socket.id }
+    userJoin(user)
+    socket.join(user.room)
+
+    socket.broadcast.to(user.room).emit('message', formatMessage({ username: 'socket', msg: `${user.username} has joined the chat` }))
+  })
 
   socket.on('disconnect', () => {
-    io.emit(
-      'message',
-      'some douche left the chat room'
-    );
+    const user = userLeave(socket.id)
+
+    if (user) {
+      io.to(user.room).emit('message', formatMessage({ username: "socket", msg: `${user.username} has left teh chat room` }))
+    }
   });
+
+
   socket.on('chatMessage', (newUser) => {
-    const newUser_Obj = {
-      ...newUser,
-      id: socket.id,
-    };
-    userJoin(newUser_Obj);
-    // console.log(formatMessage(msg));
-    socket.emit('message', formatMessage(msg));
+
+    console.log('user is', newUser)
+
+    io.to(newUser.room).emit('message', formatMessage(newUser))
   });
 });
 
